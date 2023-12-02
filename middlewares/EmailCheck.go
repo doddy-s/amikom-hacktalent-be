@@ -23,7 +23,7 @@ func EmailCheck(c *fiber.Ctx) error {
 	result := database.DBConn.Take(&user, "email = ?", c.Query("email"))
 
 	if result.Error != nil {
-		return c.Status(400).JSON(errors.BadRequestError("Email not found"))
+		return c.Status(404).JSON(errors.NotFound("Email is not found"))
 	}
 
 	c.Locals("UserId", user.UserId)

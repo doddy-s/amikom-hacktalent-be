@@ -5,17 +5,13 @@ import (
 	"amikom-hacktalent-be/errors"
 	"amikom-hacktalent-be/models"
 	"amikom-hacktalent-be/utils"
-	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func CreateSchedule(c *fiber.Ctx) error {
-	fmt.Println(c.Locals("UserId"))
-	
 	schedule := new(models.Schedule)
 	schedule.UserID = c.Locals("UserId").(uint32)
-
 
 	if err := c.BodyParser(schedule); err != nil {
 		return c.Status(400).JSON(err.Error())
@@ -30,7 +26,7 @@ func CreateSchedule(c *fiber.Ctx) error {
 	}
 
 	if !utils.IsDay(schedule.Day) {
-		return c.Status(400).JSON(errors.BadRequestError("Invalid day"))
+		return c.Status(400).JSON(errors.BadRequestError("Day is invalid"))
 	}
 
 	result := database.DBConn.Create(&schedule)
@@ -39,5 +35,5 @@ func CreateSchedule(c *fiber.Ctx) error {
 		return c.Status(400).JSON(result.Error)
 	}
 
-	return c.Status(200).JSON(newSuccess(schedule))
+	return c.Status(201).JSON(newSuccess(schedule))
 }

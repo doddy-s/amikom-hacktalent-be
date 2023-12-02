@@ -13,9 +13,9 @@ func GetDetailSchedule(c *fiber.Ctx) error {
 	if utils.IsEmptyString(c.Query("day")) {
 		return c.Next()
 	}
-	
+
 	if !utils.IsDay(c.Query("day")) {
-		return c.Status(400).JSON(errors.BadRequestError("Invalid day"))
+		return c.Status(400).JSON(errors.BadRequestError("Day is invalid"))
 	}
 
 	schedule := new([]models.Schedule)

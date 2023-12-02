@@ -22,8 +22,8 @@ func ConnectDB() {
 	DB_PORT := "3306"
 
 	var err error
-	dsn := DB_USER +":"+ DB_PASSWORD +"@tcp"+ "(" + DB_HOST + ":" + DB_PORT +")/" + DB_DBNAME + "?" + "parseTime=true&loc=Local"
-	fmt.Println("dsn : ", dsn)
+	dsn := DB_USER + ":" + DB_PASSWORD + "@tcp" + "(" + DB_HOST + ":" + DB_PORT + ")/" + DB_DBNAME + "?" + "parseTime=true&loc=Local"
+	// fmt.Println("dsn : ", dsn)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -31,6 +31,6 @@ func ConnectDB() {
 	}
 
 	db.AutoMigrate(&models.User{}, &models.Schedule{})
-	fmt.Println("Database connected")
+	fmt.Println("Database connected, as " + DB_USER + " on " + DB_HOST + " with database " + DB_DBNAME)
 	DBConn = db
 }

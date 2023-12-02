@@ -14,7 +14,7 @@ func DeleteSchedule(c *fiber.Ctx) error {
 	result := database.DBConn.Take(&schedule, "schedule_id = ?", c.Query("id"))
 
 	if result.Error != nil {
-		return c.Status(404).JSON(errors.NotFound("Schedule with id " + c.Query("id") + " not found"))
+		return c.Status(404).JSON(errors.NotFound("Schedule with ID " + c.Query("id") + " Not Found"))
 	}
 
 	if schedule.UserID != c.Locals("UserId").(uint32) {
@@ -28,6 +28,6 @@ func DeleteSchedule(c *fiber.Ctx) error {
 	}
 
 	nah := new(Empty)
-	
+
 	return c.Status(200).JSON(newSuccess(nah))
 }
